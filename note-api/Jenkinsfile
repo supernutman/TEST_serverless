@@ -42,12 +42,12 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                dir('terraform') {
+                dir('note-api/terraform') {
                     sh 'terraform init'
                     sh 'terraform apply -auto-approve'
                 }
-                dir('ansible') {
-                    sh 'ansible-playbook -i inventory playbook.yml'
+                dir('note-api/ansible') {
+                sh 'ansible-playbook -i inventory playbook.yml'
                 }
             }
         }
