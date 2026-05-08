@@ -42,7 +42,13 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploy stage - coming in Phase 3'
+                dir('terraform') {
+                    sh 'terraform init'
+                    sh 'terraform apply -auto-approve'
+                }
+                dir('ansible') {
+                    sh 'ansible-playbook -i inventory playbook.yml'
+                }
             }
         }
     }
