@@ -9,8 +9,13 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main',
-                    url: 'https://github.com/supernutman/TEST_serverless.git'
+                checkout([
+                    $class: 'GitSCM',
+                    branches: [[name: '*/main']],
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/supernutman/TEST_serverless.git'
+                    ]]
+                ])
             }
         }
 
