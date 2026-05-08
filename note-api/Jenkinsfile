@@ -3,33 +3,22 @@ pipeline {
 
     environment {
         IMAGE_NAME = "note-api"
-        DOCKER_HUB_USER = "supernutman"  // ← เปลี่ยนตรงนี้
+        DOCKER_HUB_USER = "supernutman"
     }
 
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
-            }
-        }
-
-        stage('Build') {
-            steps {
-                echo 'Installing dependencies...'
-                sh 'pip install -r app/requirements.txt || true'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Running tests...'
-                sh 'python -m pytest app/ || true'
+                git branch: 'main',
+                    url: 'https://github.com/supernutman/TEST_serverless.git'
             }
         }
 
         stage('Docker Build') {
             steps {
-                sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:latest ."
+                dir('note-api') {
+                    sh "docker build -t ${DOCKER_HUB_USER}/${IMAGE_NAME}:latest ."
+                }
             }
         }
 
@@ -48,7 +37,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                echo 'Deploy stage - Terraform/Ansible will be added in Phase 3'
+                echo 'Deploy stage - coming in Phase 3'
             }
         }
     }
