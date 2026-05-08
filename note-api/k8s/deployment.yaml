@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: note-api
+  namespace: note-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: note-api
+  template:
+    metadata:
+      labels:
+        app: note-api
+    spec:
+      containers:
+        - name: note-api
+          image: supernutman/note-api:latest
+          ports:
+            - containerPort: 5000
